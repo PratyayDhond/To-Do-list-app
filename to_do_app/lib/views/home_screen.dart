@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_app/Services/download.dart';
 import 'package:to_do_app/Services/theme.dart';
 import 'package:to_do_app/views/add_note.dart';
 
@@ -52,7 +53,18 @@ class HomeScreenState extends State<HomeScreen>{
       ),
       body: Container(
         color: theme.bg_color_body,
+        child: Column(
+        children: [
+         ElevatedButton(
+         child: Text('afsafsasf'),
+         onPressed: ()async{
+         await downloadData();
+         print('HI');
+         },
         ),
+        ],
+    ),
+    ),
     );
   }
 }
