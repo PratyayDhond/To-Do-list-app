@@ -6,7 +6,7 @@ class theme{
   static var bg_color_appBar = Colors.white;
   static var bg_color_body = Colors.white;
   static var text_color = Colors.black;
-  static var drawer_bg_color = Colors.white;
+  static var snackBarColor = Colors.white;
   static var drawer_icon_color = Colors.black;
   static var app_icon_color = Colors.black;
   static var divider_color = Colors.black26;
@@ -15,14 +15,16 @@ class theme{
   static var cursor_color = Colors.black;
   static var buttonColor = Colors.white70;
   static var buttonColorSplash = Colors.black45;
-  static var card_color = HexColor('#ff595959');
+  static HexColor card_color = HexColor('#ff595959');
+  static var defaultBorder = Colors.white24;
 
   static setVals(){
     if(dark_mode){
+      defaultBorder = Colors.red;
       bg_color_appBar = Colors.black;
       bg_color_body = HexColor('#ff1a1a1a');
       text_color = Colors.white;
-      drawer_bg_color = HexColor('#ff1a1a1a');
+      snackBarColor = Colors.white;
       drawer_icon_color = Colors.white;
       app_icon_color = Colors.white;
       divider_color = Colors.white24;
@@ -32,12 +34,13 @@ class theme{
       buttonColorSplash = Colors.white70;
 
     }else{
+      defaultBorder = Colors.green;
       buttonColor = Colors.white70;
       buttonColorSplash = Colors.black45;
       bg_color_appBar = Colors.white;
       bg_color_body = Colors.white;
       text_color = Colors.black;
-      drawer_bg_color = HexColor('#ffffffff');
+      snackBarColor = Colors.black;
       drawer_icon_color = Colors.black;
       app_icon_color = Colors.black;
       divider_color = Colors.black26;

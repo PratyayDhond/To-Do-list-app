@@ -12,6 +12,8 @@ class AddNote extends StatefulWidget{
 class AddNoteState extends State<AddNote>{
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  var SelectedDate;
+  var SelectedTime;
 
   @override
   Widget build(BuildContext context) {
@@ -50,6 +52,10 @@ class AddNoteState extends State<AddNote>{
               icon: Icon(Icons.dark_mode,color: theme.app_icon_color,)),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){},
+        child: Icon(Icons.task),
+      ),
       body: Container(
         child: Padding(
           padding: EdgeInsets.all(20.0),
@@ -58,20 +64,29 @@ class AddNoteState extends State<AddNote>{
                 TextFormField(
                   controller: descriptionController,
                   decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: theme.app_icon_color)
+                    ),
                     hintText: 'e.g. Go for a walk',
                     hintStyle: TextStyle(color: theme.text_color, ),
                     labelText: 'Task title',
                     labelStyle: TextStyle(color: theme.text_color,fontWeight: FontWeight.bold),
                   ),
+                  maxLength: 50,
                 ),
-                 SizedBox(height: 20),
                  TextFormField(
                   controller: titleController,
                   decoration: InputDecoration(
-
+                    border: OutlineInputBorder(),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: theme.app_icon_color)
+                    ),
                     labelText: 'Task description',
                     labelStyle: TextStyle(color: theme.text_color,fontWeight: FontWeight.bold),
                   ),
+                   maxLines: 3,
+                   maxLength: 1000,
                 ),
                 SizedBox(height: 30),
                 Row(
@@ -84,11 +99,13 @@ class AddNoteState extends State<AddNote>{
                           shadowColor: MaterialStateProperty.all(theme.bg_color_appBar),
                           // elevation: MaterialStateProperty.all(3),
                         ),
-                        onPressed: (){
-
+                        onPressed: ()async{
+                          await _selectDate(context);
+                          String date = SelectedDate.subString(0,SelectedDate.indexOf(' '));
+                          print(date);
                         },
                         icon: Icon(Icons.calendar_today,color: theme.app_icon_color,),
-                        label: Text('Pick Date',style: TextStyle(color: theme.text_color),
+                        label: Text(SelectedDate == null ? 'Pick Date' : '$SelectedDate',style: TextStyle(color: theme.text_color),
                         ),
                     ),
                     ElevatedButton.icon(
@@ -98,15 +115,20 @@ class AddNoteState extends State<AddNote>{
                           shadowColor: MaterialStateProperty.all(theme.bg_color_appBar),
                           // elevation: MaterialStateProperty.all(3),
                         ),
-                        onPressed: (){
-
+                        onPressed: ()async{
+                          await _selectTime(context);
                         },
                         icon: Icon(Icons.watch_later_rounded,color: theme.app_icon_color,),
-                        label: Text('Pick Time',style: TextStyle(color: theme.text_color),
+                        label: Text(SelectedTime == null ? 'Pick Time' : '$SelectedTime',style: TextStyle(color: theme.text_color),
                         ),
                     ),
                   ],
-                )
+                ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                ],
+              )
             ],
           ),
         ),
@@ -114,4 +136,46 @@ class AddNoteState extends State<AddNote>{
     );
   }
 
+  var currentDate = DateTime.now();
+
+  Future<void> _selectDate(BuildContext context) async {
+    final DateTime? pickedDate = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2050));
+    if (pickedDate != null && pickedDate != currentDate)
+      setState(() {
+        String date = pickedDate.toString().substring(0,10);
+        SelectedDate = date;
+      });
+    }
+
+    Future<void> _selectTime(BuildContext context) async {
+      final TimeOfDay? pickedTime = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.now(),
+      );
+      if(pickedTime != null && pickedTime != TimeOfDay.now()){
+        String time = pickedTime.toString().substring(10,15);
+        print(time);
+        setState(() {
+          SelectedTime = time;
+        });
+      }
+      if (pickedTime != null && pickedTime == TimeOfDay.now()) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+              backgroundColor: theme.dark_mode? Colors.black : Colors.white,
+              content: Text('Time cannot be set to present time',
+                    style: TextStyle(color: Colors.red,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18),
+              )
+          )
+        );
+      }
+    }
+
 }
+
