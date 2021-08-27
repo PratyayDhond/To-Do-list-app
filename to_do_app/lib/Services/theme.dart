@@ -17,9 +17,11 @@ class theme{
   static var buttonColorSplash = Colors.black45;
   static HexColor card_color = HexColor('#ff595959');
   static var defaultBorder = Colors.white24;
+  static var SubmitColor = HexColor('#ff4caf50');
 
   static setVals(){
     if(dark_mode){
+      SubmitColor = HexColor('#ff69f0ae');
       defaultBorder = Colors.red;
       bg_color_appBar = Colors.black;
       bg_color_body = HexColor('#ff1a1a1a');
@@ -34,6 +36,7 @@ class theme{
       buttonColorSplash = Colors.white70;
 
     }else{
+      SubmitColor = HexColor('#ff4caf50');
       defaultBorder = Colors.green;
       buttonColor = Colors.white70;
       buttonColorSplash = Colors.black45;

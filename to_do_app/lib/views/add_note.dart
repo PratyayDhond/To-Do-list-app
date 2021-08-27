@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/Services/theme.dart';
+import 'package:to_do_app/Services/upload.dart';
 
 class AddNote extends StatefulWidget{
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
   createState() => AddNoteState();
@@ -14,6 +17,7 @@ class AddNoteState extends State<AddNote>{
   TextEditingController descriptionController = TextEditingController();
   var SelectedDate;
   var SelectedTime;
+  var loading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -53,16 +57,27 @@ class AddNoteState extends State<AddNote>{
         ],
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){},
-        child: Icon(Icons.task),
+        backgroundColor: theme.SubmitColor,
+        foregroundColor: Colors.greenAccent,
+        splashColor: Colors.lightGreenAccent,
+        onPressed: ()async{
+            await uploadData(titleController.text, descriptionController.text,SelectedDate,SelectedTime);
+            Navigator.pop(context);
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+              content: Text('Task Created Successfully'),
+            ),
+            );
+         },
+        child: Icon(Icons.task,color: Colors.black,),
       ),
-      body: Container(
+      body:Container(
         child: Padding(
           padding: EdgeInsets.all(20.0),
           child: Column(
             children: [
                 TextFormField(
-                  controller: descriptionController,
+                  controller: titleController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
@@ -76,7 +91,7 @@ class AddNoteState extends State<AddNote>{
                   maxLength: 50,
                 ),
                  TextFormField(
-                  controller: titleController,
+                  controller: descriptionController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
@@ -101,8 +116,7 @@ class AddNoteState extends State<AddNote>{
                         ),
                         onPressed: ()async{
                           await _selectDate(context);
-                          String date = SelectedDate.subString(0,SelectedDate.indexOf(' '));
-                          print(date);
+                          print(SelectedDate);
                         },
                         icon: Icon(Icons.calendar_today,color: theme.app_icon_color,),
                         label: Text(SelectedDate == null ? 'Pick Date' : '$SelectedDate',style: TextStyle(color: theme.text_color),
@@ -124,11 +138,6 @@ class AddNoteState extends State<AddNote>{
                     ),
                   ],
                 ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                ],
-              )
             ],
           ),
         ),
@@ -156,14 +165,14 @@ class AddNoteState extends State<AddNote>{
         context: context,
         initialTime: TimeOfDay.now(),
       );
-      if(pickedTime != null && pickedTime != TimeOfDay.now()){
+      if(pickedTime != null && pickedTime != TimeOfDay.now() || SelectedDate != DateTime.now().toString().substring(0,10)){
         String time = pickedTime.toString().substring(10,15);
         print(time);
         setState(() {
           SelectedTime = time;
         });
       }
-      if (pickedTime != null && pickedTime == TimeOfDay.now()) {
+      if (pickedTime != null && pickedTime == TimeOfDay.now() && SelectedDate == DateTime.now().toString().substring(0,10)) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
               backgroundColor: theme.dark_mode? Colors.black : Colors.white,
