@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_app/Services/theme.dart';
+import 'package:to_do_app/views/add_note.dart';
 
 class HomeScreen extends StatefulWidget{
   @override
@@ -16,13 +17,17 @@ class HomeScreenState extends State<HomeScreen>{
         foregroundColor: theme.buttonColorSplash,
 
         child: Icon(Icons.note_add,color: theme.app_icon_color,size: 30,),
-        onPressed: (){
-
+        onPressed: () async {
+          await Navigator.push(context, MaterialPageRoute(
+              builder: (context) => AddNote(),
+          ),
+          );
+          setState(() {});
         },
       ),
       appBar: AppBar(
         backgroundColor: theme.bg_color_appBar,
-        title: Text('ToDo List',
+        title: Text('ToDo app',
           style: TextStyle(color: theme.text_color),),
         centerTitle: true,
         actions: [
