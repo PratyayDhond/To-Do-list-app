@@ -1,8 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:to_do_app/Services/delete.dart';
 import 'package:to_do_app/Services/download.dart';
 import 'package:to_do_app/Services/theme.dart';
+import 'package:to_do_app/Services/update_note.dart';
 import 'package:to_do_app/views/add_note.dart';
+import 'package:to_do_app/views/edit_note.dart';
 
 class HomeScreen extends StatefulWidget{
 
@@ -78,15 +81,39 @@ class HomeScreenState extends State<HomeScreen>{
                                     builder: (context){
                                       return SimpleDialog(
                                         backgroundColor: theme.bg_color_body,
-                                        title: Text(snapshot.data.docs[index]['title'],style: TextStyle(color: theme.text_color),),
+                                        title: Container(
+                                            child: Column(
+                                              children: [
+                                                Row(
+                                                  children: [
+                                                    SizedBox(width: MediaQuery.of(context).size.width/2 +10,),
+                                                    IconButton(onPressed: ()async{
+                                                      Navigator.push(context,
+                                                          MaterialPageRoute(
+                                                              builder: (context) => EditTask(snapshot.data.docs[index].id,snapshot.data.docs[index]['title'], snapshot.data.docs[index]['description'])
+                                                          ),
+                                                      );
+                                                    }, icon: Icon(Icons.edit, color: theme.dark_mode ? Colors.yellowAccent : Colors.black, size: 30,)),
+                                                  ],
+                                                ),
+                                                Divider(color: theme.divider_color,),
+                                                Row(
+
+                                                   children: [
+                                                   Flexible(child: Text(snapshot.data.docs[index]['title'],style: TextStyle(color: theme.text_color),overflow: TextOverflow.visible,)),
+                                           ],
+                                         ),
+                                              ],
+                                            ),
+                                        ),
                                         children: [
                                           Padding(padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                             child: Column(
                                               crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
-                                                SizedBox(height: 10,),
+
                                                 Text(snapshot.data.docs[index]['description'], style: TextStyle(color: theme.text_color,wordSpacing: 1.5,fontSize: 16),),
-                                                SizedBox(height: 10,),
+                                                SizedBox(height: 8,),
                                                 Text('Deadline on ${snapshot.data.docs[index]['date']} at ${snapshot.data.docs[index]['time']}',
                                                   style: TextStyle(color: theme.text_color),
                                                 ),
@@ -115,8 +142,9 @@ class HomeScreenState extends State<HomeScreen>{
 
                               leading: IconButton(
                                   onPressed: (){
+                                    deleteTask(snapshot.data.docs[index].id);
                                   },
-                                  icon: Icon(Icons.check_circle,color: Colors.green,)
+                                  icon: Icon(Icons.check_circle,color: theme.dark_mode?Colors.greenAccent[700] : Colors.green[700] ,)
                               ),
                             ),
                           ),
