@@ -8,7 +8,8 @@ import 'package:to_do_app/views/add_note.dart';
 import 'package:to_do_app/views/edit_note.dart';
 
 class HomeScreen extends StatefulWidget{
-
+  String? email;
+  HomeScreen(this.email);
   @override
   createState() => HomeScreenState();
 }
@@ -52,12 +53,13 @@ class HomeScreenState extends State<HomeScreen>{
               backgroundColor: MaterialStateProperty.all(theme.bg_color_appBar),
             ),
             onPressed: (){
+              Navigator.pop(context);
               setState(() {
                 theme.isLoggedIn = !theme.isLoggedIn;
               });
             },
-            icon: Icon(theme.isLoggedIn? Icons.logout_sharp : Icons.login_sharp,color: theme.isLoggedIn? Colors.grey[700] : Colors.green[600],),
-            label: Text(theme.isLoggedIn? 'Log out' : 'Log in',style: TextStyle(color: theme.text_color),),
+            icon: Icon( Icons.logout_sharp, color:Colors.grey[700]),
+            label: Text( 'Log out' ,style: TextStyle(color: theme.text_color),),
 
           ),
         ],

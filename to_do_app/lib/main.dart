@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:to_do_app/views/edit_note.dart';
 import 'package:to_do_app/views/home_screen.dart';
 import 'package:to_do_app/Services/theme.dart';
+import 'package:to_do_app/views/login.dart';
 
 void main()async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget{
   Widget build(BuildContext context){
     return MaterialApp(
       title: 'To-do-App',
-      home: HomeScreen(),
+      home: LoginScreen(),
       // home: HomeScreen(),
     );
   }
