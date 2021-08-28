@@ -17,7 +17,7 @@ class theme{
   static var cursor_color = Colors.black;
   static var buttonColor = Colors.white70;
   static var buttonColorSplash = Colors.black45;
-  static var card_color = HexColor('#ffbdbdbd');
+  static var card_color = HexColor('#ffE6E6E6');
   static var defaultBorder = Colors.white24;
   static var SubmitColor = HexColor('#ff4caf50');
 
@@ -39,7 +39,7 @@ class theme{
       buttonColorSplash = Colors.white70;
 
     }else{
-      card_color = HexColor('#ffbdbdbd');
+      card_color = HexColor('#ffE6E6E6');
       SubmitColor = HexColor('#ff4caf50');
       defaultBorder = Colors.white24;
       buttonColor = Colors.white70;
