@@ -77,7 +77,9 @@ class AddNoteState extends State<AddNote>{
           child: Column(
             children: [
                 TextFormField(
+                  style: TextStyle(color: theme.text_color),
                   controller: titleController,
+
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(
@@ -91,7 +93,8 @@ class AddNoteState extends State<AddNote>{
                   maxLength: 50,
                 ),
                  TextFormField(
-                  controller: descriptionController,
+                   style: TextStyle(color: theme.text_color),
+                   controller: descriptionController,
                   decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     focusedBorder: OutlineInputBorder(

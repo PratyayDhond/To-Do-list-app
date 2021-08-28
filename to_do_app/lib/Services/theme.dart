@@ -15,12 +15,13 @@ class theme{
   static var cursor_color = Colors.black;
   static var buttonColor = Colors.white70;
   static var buttonColorSplash = Colors.black45;
-  static HexColor card_color = HexColor('#ff595959');
+  static var card_color = HexColor('#fffff9e8');
   static var defaultBorder = Colors.white24;
-  static var SubmitColor = HexColor('#ff4caf50');
+  static var SubmitColor = HexColor('#ffbdbdbd');
 
   static setVals(){
     if(dark_mode){
+      card_color = HexColor('#ff595959');
       SubmitColor = HexColor('#ff69f0ae');
       defaultBorder = Colors.red;
       bg_color_appBar = Colors.black;
@@ -36,6 +37,7 @@ class theme{
       buttonColorSplash = Colors.white70;
 
     }else{
+      card_color = HexColor('#ffbdbdbd');
       SubmitColor = HexColor('#ff4caf50');
       defaultBorder = Colors.green;
       buttonColor = Colors.white70;
