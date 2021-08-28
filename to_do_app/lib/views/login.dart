@@ -90,11 +90,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             }
                             if(email.text != '' && password.text != ''){
                               setState(() {});
-                              User? result = await auth().LogIn(email.text, password.text,context);
+                              User? result = await auth().LogIn(email.text.trim(), password.text,context);
                               if(result!= null){
                                 print("success");
                                 await Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => HomeScreen(email.text),
+                                  builder: (context) => HomeScreen(email.text.trim()),
                                 )
                                 );
                               }else{
