@@ -3,6 +3,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 class theme{
   static var dark_mode = false;
+  static var isLoggedIn = false;
   static var bg_color_appBar = Colors.white;
   static var bg_color_body = Colors.white;
   static var text_color = Colors.black;

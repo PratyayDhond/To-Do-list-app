@@ -23,7 +23,6 @@ class HomeScreenState extends State<HomeScreen>{
         backgroundColor: theme.buttonColor,
         splashColor: theme.buttonColorSplash,
         foregroundColor: theme.buttonColorSplash,
-
         child: Icon(Icons.note_add,color: theme.app_icon_color,size: 30,),
         onPressed: () async {
           await Navigator.push(context, MaterialPageRoute(
@@ -34,28 +33,33 @@ class HomeScreenState extends State<HomeScreen>{
         },
       ),
       appBar: AppBar(
+        leading: IconButton(onPressed: (){setState(() {
+          theme.dark_mode = !theme.dark_mode;
+          setState(() {
+            theme.setVals();
+          });
+        });
+        },
+            icon: Icon(theme.dark_mode?Icons.light_mode:Icons.dark_mode, color: theme.app_icon_color,)),
+
         backgroundColor: theme.bg_color_appBar,
         title: Text('ToDo app',
           style: TextStyle(color: theme.text_color),),
         centerTitle: true,
         actions: [
-          /** Theme of the app */
-          theme.dark_mode?
-                IconButton(onPressed: (){setState(() {
-                  theme.dark_mode = !theme.dark_mode;
-                  setState(() {
-                    theme.setVals();
-                  });
-                });
-                },
-                    icon: Icon(Icons.light_mode, color: theme.app_icon_color,))
-              : IconButton(onPressed: (){
-            theme.dark_mode = !theme.dark_mode;
-            setState(() {
-              theme.setVals();
-            });
-          },
-              icon: Icon(Icons.dark_mode,color: theme.app_icon_color,)),
+          ElevatedButton.icon(
+            style: ButtonStyle(
+              backgroundColor: MaterialStateProperty.all(theme.bg_color_appBar),
+            ),
+            onPressed: (){
+              setState(() {
+                theme.isLoggedIn = !theme.isLoggedIn;
+              });
+            },
+            icon: Icon(theme.isLoggedIn? Icons.logout_sharp : Icons.login_sharp,color: theme.isLoggedIn? Colors.grey[700] : Colors.green[600],),
+            label: Text(theme.isLoggedIn? 'Log out' : 'Log in',style: TextStyle(color: theme.text_color),),
+
+          ),
         ],
       ),
       body: StreamBuilder(
