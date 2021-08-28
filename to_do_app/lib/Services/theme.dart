@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class theme{
+  static var email = "";
   static var dark_mode = false;
   static var isLoggedIn = true;
   static var bg_color_appBar = Colors.white;

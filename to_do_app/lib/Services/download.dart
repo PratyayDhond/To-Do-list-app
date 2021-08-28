@@ -9,8 +9,8 @@ class Note{
   String time = " ";
 }
 
-Future downloadData()async{
-  CollectionReference data = firestore.collection('tasks');
+Future downloadData(email) async{
+  CollectionReference data = firestore.collection('tasks').doc(email).collection('user_tasks');
   QuerySnapshot allTasks = await data.get();
   print(allTasks.size);
   var items = [];

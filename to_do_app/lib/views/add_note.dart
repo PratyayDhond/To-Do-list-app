@@ -5,6 +5,8 @@ import 'package:to_do_app/Services/theme.dart';
 import 'package:to_do_app/Services/upload.dart';
 
 class AddNote extends StatefulWidget{
+  String? email = "";
+  AddNote(this.email);
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   @override
@@ -61,7 +63,7 @@ class AddNoteState extends State<AddNote>{
         foregroundColor: Colors.greenAccent,
         splashColor: Colors.lightGreenAccent,
         onPressed: ()async{
-            await uploadData(titleController.text, descriptionController.text,SelectedDate,SelectedTime);
+            await uploadData(titleController.text, descriptionController.text,SelectedDate,SelectedTime,widget.email);
             Navigator.pop(context);
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(

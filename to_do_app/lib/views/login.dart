@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               if(result!= null){
                                 print("success");
                                 await Navigator.push(context, MaterialPageRoute(
-                                  builder: (context) => HomeScreen(result.email),
+                                  builder: (context) => HomeScreen(email.text),
                                 )
                                 );
                               }else{

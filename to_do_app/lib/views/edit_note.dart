@@ -70,7 +70,7 @@ class EditTaskState extends State<EditTask>{
         foregroundColor: Colors.greenAccent,
         splashColor: Colors.lightGreenAccent,
         onPressed: ()async{
-          await updateTask(widget.id,titleController.text,descriptionController.text);
+          await updateTask(widget.id,titleController.text,descriptionController.text,theme.email);
           Navigator.pop(context);
           Navigator.pop(context);
           ScaffoldMessenger.of(context).showSnackBar(
