@@ -2,13 +2,30 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:to_do_app/Services/upload.dart';
 
-downloadData()async{
-  CollectionReference data = firestore.collection('data');
+class Note{
+  String title = " ";
+  String description = " ";
+  String date = " ";
+  String time = " ";
+}
+
+Future downloadData()async{
+  CollectionReference data = firestore.collection('tasks');
   QuerySnapshot allTasks = await data.get();
   print(allTasks.size);
+  var items = [];
   allTasks.docs.forEach((DocumentSnapshot result){
-    print(result.data());
+    print(result['title']);
+    print(result['description']);
+    print(result['date']);
+    print(result['time']);
+    Note note = new Note();
+    note.title = result['title'];
+    note.description = result['description'];
+    note.date = result['date'];
+    note.time = result['time'];
+    items.add(note);
   });
    // print(allTasks);
-  return allTasks;
+   return items;
 }
